@@ -57,5 +57,43 @@ class UsersController < ApplicationController
 	
 	render json: @user.splatts
   end
+  
+  # GET /users/follows/1
+  # GET /users/follows/1.json
+  def show_follows
+	@user = User.find(params[:id])
 	
+	render json: @user.follows
+  end
+  
+  # GET /users/followers/1
+  # GET /users/followers/1.json
+  def show_followers
+	@user = Users.find(params[:id])
+	
+	render json: @user.followed_by
+  end
+  
+  # POST /users/follows/1/2
+  # POST /users/follows/1/2.json
+  def add_follows
+    @user = User.find(params[:id])
+	@user_to_follow = User.find(params[:follows_id])
+
+	@user.follows << @user_to_follow
+	
+    @render json: @user.follows
+    end
+  end
+  
+  # DELETE /users/follows/1/2
+  # DELETE /users/follows/1/2.json
+  def delete_follows
+	@user = User.find(params[:id])
+	@user_to_remove = User.find(params[:follow_id])
+	
+	@user.follows.delete(@user_to_delete)
+	
+	@render json: @user.follows
+  end
 end

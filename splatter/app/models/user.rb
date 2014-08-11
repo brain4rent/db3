@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 	join_table: :follows,
 	foreign_key: :follower_id,
 	association_foreign_key: :followed_id
-has_and_belongs_to_many :follows,
+has_and_belongs_to_many :followed_by,
 	class_name: "User",
 	join_table: :follows,
 	foreign_key: :followed_id,
