@@ -81,9 +81,6 @@ class UsersController < ApplicationController
 	@user_to_follow = User.find(params[:follows_id])
 
 	@user.follows << @user_to_follow
-	
-    @render json: @user.follows
-    end
   end
   
   # DELETE /users/follows/1/2
@@ -93,7 +90,12 @@ class UsersController < ApplicationController
 	@user_to_remove = User.find(params[:follow_id])
 	
 	@user.follows.delete(@user_to_delete)
+  end
+  
+  # GET /users/splatts-feed/1
+  def splatts_feed
+	@feed = Splatt.find_by_sql(["SELECT * FROM splatts JOIN follows ON splatts.user_id = follows.followed_id JOIN users ON follows.follower_id = users.id WHERE users.id = ?", params[:id]])
 	
-	@render json: @user.follows
+	
   end
 end
