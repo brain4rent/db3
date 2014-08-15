@@ -74,22 +74,25 @@ class UsersController < ApplicationController
 	render json: @user.followed_by
   end
   
-  # POST /users/follows/1/2
-  # POST /users/follows/1/2.json
+  # POST /users/follows
   def add_follows
-    @user = User.find(params[:id])
-	@user_to_follow = User.find(params[:follows_id])
+	@user = User.find(params[:follower_id])
+	@user_to_follow = User.find(params[:followed_id])
 
 	@user.follows << @user_to_follow
+	
+	render json: @user.follows
   end
   
   # DELETE /users/follows/1/2
   # DELETE /users/follows/1/2.json
   def delete_follows
 	@user = User.find(params[:id])
-	@user_to_remove = User.find(params[:follow_id])
+	@user_to_delete = User.find(params[:follows_id])
 	
 	@user.follows.delete(@user_to_delete)
+	
+	render json: @user.follows
   end
   
   # GET /users/splatts-feed/1
