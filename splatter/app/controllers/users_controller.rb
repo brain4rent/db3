@@ -104,4 +104,6 @@ class UsersController < ApplicationController
   def splatts_feed
 	@feed = Splatt.find_by_sql(["SELECT * FROM splatts JOIN follows ON splatts.user_id = follows.followed_id JOIN users ON follows.follower_id = users.id WHERE users.id = ?", params[:id]])
   end
-end
+
+  end
+
