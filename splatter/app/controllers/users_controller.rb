@@ -1,14 +1,14 @@
 class UsersController < ApplicationController
   # GET /users
-  # GET /users.json
+  # Returns a list of all users
   def index
     @users = User.all
 
     render json: @users
   end
 
-  # GET /users/1
-  # GET /users/1.json
+  # GET /users/[:id]
+  # Returns user with specified id
   def show
     @user = User.find(params[:id])
 
@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   end
 
   # POST /users
-  # POST /users.json
+  # Creates a user - using POST body
   def create
     @user = User.new(user_params(params[:user]))
 
@@ -27,8 +27,8 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
+  # PATCH/PUT /users/[:id]
+  # Updates a user with specified id - using PUT body
   def update
     @user = User.find(params[:id])
 
@@ -39,8 +39,8 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
+  # DELETE /users/[:id]
+  # Deletes user with specified id
   def destroy
     @user = User.find(params[:id])
     @user.destroy
@@ -48,26 +48,29 @@ class UsersController < ApplicationController
     head :no_content
   end
   
+  #White listing for user
   def user_params(params)
 	params.permit(:email, :password, :name, :blurb)
   end
   
+  # GET /users/splatts/[:id]
+  # Returns splatts for user with specified id
   def splatts
 	@user = User.find(params[:id])
 	
 	render json: @user.splatts
   end
   
-  # GET /users/follows/1
-  # GET /users/follows/1.json
+  # GET /users/follows/[:id]
+  # Returns list of users followed by specified user
   def show_follows
 	@user = User.find(params[:id])
 	
 	render json: @user.follows
   end
   
-  # GET /users/followers/1
-  # GET /users/followers/1.json
+  # GET /users/followers/[:id]
+  # Returns list of user who follow user with specified id
   def show_followers
 	@user = Users.find(params[:id])
 	
@@ -75,6 +78,7 @@ class UsersController < ApplicationController
   end
   
   # POST /users/follows
+  # Creates a follower/followed relationship - using POST body
   def add_follows
 	@user = User.find(params[:follower_id])
 	@user_to_follow = User.find(params[:followed_id])
@@ -84,8 +88,8 @@ class UsersController < ApplicationController
 	render json: @user.follows
   end
   
-  # DELETE /users/follows/1/2
-  # DELETE /users/follows/1/2.json
+  # DELETE /users/follows/[:id1]/[:id2]
+  # Causes user with id1 to unfollow the user with id2
   def delete_follows
 	@user = User.find(params[:id])
 	@user_to_delete = User.find(params[:follows_id])
@@ -95,10 +99,9 @@ class UsersController < ApplicationController
 	render json: @user.follows
   end
   
-  # GET /users/splatts-feed/1
+  # GET /users/splatts-feed/[:id]
+  #Returns the splatts feed for the user with the specified id
   def splatts_feed
 	@feed = Splatt.find_by_sql(["SELECT * FROM splatts JOIN follows ON splatts.user_id = follows.followed_id JOIN users ON follows.follower_id = users.id WHERE users.id = ?", params[:id]])
-	
-	
   end
 end
