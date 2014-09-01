@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+
+before_filter :set_headers
+  
   # GET /users
   # Returns a list of all users
   def index
@@ -107,3 +110,6 @@ class UsersController < ApplicationController
 
   end
 
+  def set_headers
+    headers['Access-Control-Allow-Origin'] = '*'
+  end
