@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="splatter-web">
 	<head>
-		<title>Basic Splatter Client</title>
+		<title>Splatter</title>
 		<script src="angular.min.js"></script>
 		<script src="angular-resource.js"></script>
 		<script src="app.js"></script>
@@ -9,11 +9,17 @@
 	<body>
 		<div ng-controller="UserController as user">
 
-			<p>{{user.u.name}}</p>
-			<p>{{user.u.email}}</p>
+			<p>Hello {{user.u.name}}</p>
 			<p>{{user.u.blurb}}</p>
-
+			
+			<div ng-repeat="splatt in user.feed">
+				<p>{{splatt.body}}</p>
+			</div>
+		
+			<form ng-submit="user.updateUser()">
+				<input type="text" ng-model="user.data.name"  />
+				<input type="submit"  value="Login" />
+			</form>
 		</div>
 	</body>
 </html>
-

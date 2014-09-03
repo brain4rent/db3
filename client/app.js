@@ -1,53 +1,32 @@
 (function() { // We use this anonymous function to create a closure.
 
-	var app = angular.module('splatter-web', []);
+	var app = angular.module('splatter-web', ['ngResource']);
 
+  //solves CORS issues
+  app.config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.defaults.headers.common = {};
+    $httpProvider.defaults.headers.post = {};
+    $httpProvider.defaults.headers.put = [];
+  }]);
 
-	app.controller('UserController', function() {
-
-    this.u = u1;
+  // USER CONTROLLER
+	app.controller('UserController', function(User) {
+    this.u = User.get({id: 1});
     
+    var self = this;
+    this.updateUser = function (){
+      var userID = this.data.name;
+      self.u = User.get({id: userID});
+      this.data = {};
+    }
 	});
 
 
-        // add your form controller below
+  app.controller('LoginController', function(User){
+  });
 
+	app.factory("User", function ($resource) {
+    return $resource("http://bernhardt.sqrawler.com/api/users/:id");
+  });
 
-        // add your form controller above
-
-	// mock data
-        var u1 = {
-          id: 1,
-          name: "Jane Doe",
-          email: "jane@doe.com",
-          blurb: "Sometimes I feel anonymous."
-	};	
-
-        var u2 = {
-          id: 2,
-	  name: "Bob Smith",
-	  email: "bob@smith.org"
-	};
-
-       var feed = [
-         {
-	   id: 3,
-           user_id: 2,
-           body: "This is Bob's most recent splatt.",
-	   created_at: "2014-08-17T22:00:00Z"
-	 },
-         {
-	   id: 2,
-           user_id: 2,
-           body: "This is Bob's second splatt.",
-	   created_at: "2014-08-16T13:25:00Z"
-         },
-         {
-	   id: 1,
-           user_id: 2,
-           body: "This is Bob's first splatt.",
-	   created_at: "2014-08-16T10:25:00Z"
-	 }
-   
-       ];
-})();
+}());
