@@ -2,9 +2,12 @@
 <html ng-app="splatter-web">
 	<head>
 		<title>Splatter</title>
+		
 		<script src="angular.min.js"></script>
 		<script src="angular-resource.js"></script>
 		<script src="app.js"></script>
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script type="text/javascript" src="ui.js"></script>
 	</head>
 	<body>
 		<div ng-controller="UserController as user">
@@ -20,6 +23,14 @@
 				<input type="text" ng-model="user.data.name"  />
 				<input type="submit"  value="Login" />
 			</form>
+
+			<form id="registerForm" ng-controller="RegisterController as register" ng-submit="register.addUser()">
+				<input type="text" ng-model="register.data.name" />
+				<input type="text" ng-model="register.data.email" />
+				<input id="register" type="submit" value="Register"/>
+				<button id="cancel">Cancel</button>
+			</form>
+			<button id="registerNow">Register Now</button>
 		</div>
 	</body>
 </html>

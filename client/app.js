@@ -22,7 +22,7 @@
 	});
 
 
-  app.controller('LoginController', function(User){
+  app.controller('RegisterController', function(User){
   });
 
 	app.factory("User", function ($resource) {
