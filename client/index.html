@@ -6,31 +6,57 @@
 		<script src="angular.min.js"></script>
 		<script src="angular-resource.js"></script>
 		<script src="app.js"></script>
-		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-		<script type="text/javascript" src="ui.js"></script>
 	</head>
 	<body>
-		<div ng-controller="UserController as user">
+		<div ng-controller="RegisterController as register">
+			<h1>Register User</h1>
+			<form id="registerForm" ng-submit="register.registerUser()">
+				<input type="text" placeholder="Name" ng-model="register.data.registerName" /><br/>
+				<input type="text" placeholder="Email" ng-model="register.data.registerEmail" /><br/>
+				<input type="text" placeholder="Password" ng-model="register.data.registerPassword" /><br/>
+				<input id="register" type="submit" value="Register"/>
+			</form>
+		</div>
 
-			<p>Hello {{user.u.name}}</p>
-			<p>{{user.u.blurb}}</p>
-			
-			<div ng-repeat="splatt in user.feed">
-				<p>{{splatt.body}}</p>
-			</div>
-		
-			<form ng-submit="user.updateUser()">
-				<input type="text" ng-model="user.data.name"  />
+		<div ng-controller="LoginController as login">
+			<h1>Login User</h1>
+			<form ng-submit="login.loginUser()" >
+				<input type="text"  ng-model="login.data.name"  />
 				<input type="submit"  value="Login" />
 			</form>
+			<p>Name: {{login.u.name}}</p>
+			<p>Blurb: {{login.u.blurb}}</p>
+		</div>
 
-			<form id="registerForm" ng-controller="RegisterController as register" ng-submit="register.addUser()">
-				<input type="text" ng-model="register.data.name" />
-				<input type="text" ng-model="register.data.email" />
-				<input id="register" type="submit" value="Register"/>
-				<button id="cancel">Cancel</button>
+		<div ng-controller="UpdateController as update" >
+			<h3>Update User</h3>
+			<form id="editNameForm" ng-submit="update.updateUser()">
+				<input type="text" placeholder="ID" ng-model="update.data.currentID"></br>
+				<input type="text" placeholder="Name" ng-model="update.data.currentName" /></br>
+				<input type="text" placeholder="Blurb" ng-model="update.data.currentBlurb" /></br>
+				<input id="update" type="submit" value="Save Changes"/>
 			</form>
-			<button id="registerNow">Register Now</button>
+		</div>
+
+		<div ng-controller="ComposeController as splatt" >
+			<h3>New Splatt</h3>
+			<form id="editNameForm" ng-submit="splatt.submitSplatt()">
+				<input type="text" placeholder="ID" ng-model="splatt.data.userID"></br>
+				<textarea placeholder="Splatt" cols="20" rows="5" ng-model="splatt.data.currentBody"></textarea></br>
+				<input id="update" type="submit" value="Save Changes"/>
+			</form>
+		</div>
+
+		<div ng-controller="FeedController as userFeed" >
+			<h3>Splatt Feed</h3>
+			<form id="editNameForm" ng-submit="userFeed.updateFeed()">
+				<input type="text" placeholder="ID" ng-model="userFeed.data.userID">
+				<input id="update" type="submit" value="Change User"/>
+			</form>
+			<div ng-repeat="splatts in userFeed.feed">
+				{{splatts.date | date: 'dd/MM/yyyy h:mma'}}
+				{{splatts.splatt}}
+			</div>
 		</div>
 	</body>
 </html>
