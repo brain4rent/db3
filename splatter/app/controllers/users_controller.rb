@@ -105,7 +105,8 @@ before_filter :set_headers
   # GET /users/splatts-feed/[:id]
   #Returns the splatts feed for the user with the specified id
   def splatts_feed
-	@feed = Splatt.find_by_sql(["SELECT * FROM splatts JOIN follows ON splatts.user_id = follows.followed_id JOIN users ON follows.follower_id = users.id WHERE users.id = ?", params[:id]])
+	@feed = Splatt.find_by_sql(["SELECT * FROM splatts JOIN follows ON splatts.user_id = follows.followed_id JOIN users ON follows.follower_id = users.id WHERE users.id = ? 
+    UNION SELECT * FROM splatts WHERE user_id = ? ORDER BY created_at DESC", params[:id]])
   end
 
   end

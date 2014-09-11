@@ -1,7 +1,7 @@
 $(document).ready(function(){
-	$("#registerForm").hide();
+	$("#register").hide();
 
 	$("#registerButton").click(function(){
-		$("#registerForm").toggle();
+		$("#register").toggle();
 	});
 });

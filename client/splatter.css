@@ -13,6 +13,7 @@ html {
 
 input {
 	font-family: 'Finger Paint', cursive;
+	margin-top: 1%;
 }
 button{
 	font-family: 'Finger Paint', cursive;
@@ -25,12 +26,16 @@ button{
 	top: 0;
 	width: 100%;
 	height: 65px;
-	background-image: linear-gradient(to bottom, #FFFFFF, #E2E2E2);
+	background-image: linear-gradient(to bottom, #0080FF, #66b2ff);
 	padding-left: 20%;
 }
 
 #topLeft{
 	float: left;
+}
+
+#titleImage{
+	height: 70px;
 }
 
 #topRight{
@@ -48,12 +53,38 @@ button{
 }
 
 #register {
+	border: 5px solid #66b2ff;
+	width: 20%;
+	float: right;
+	margin-right: 15%;
+	margin-top: -2%;
+	padding: 2%;
+	background-color: #66b2ff;
 }
 
+#current {
+	margin-left: 10%;
+	float: left;
+}
+
+#update{
+	margin-left: 10%;
+	float: left;
+}
+
+#compose{
+	margin-top: 15%;
+	margin-left: 10%;
+}
+
+.splatts{
+	margin-left: 10%;
+	margin-top: 10px;
+}
 #footer {
 	margin-top: 10%;
 	height: 40px;
 	width: 100%;
 	text-align: center;
-	background-image: linear-gradient(to top, #FFFFFF, #E2E2E2);
+	background-image: linear-gradient(to top, #0080FF, #66b2ff);
 }
