@@ -2,60 +2,108 @@
 <html ng-app="splatter-web">
 	<head>
 		<title>Splatter</title>
-		
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="angular.min.js"></script>
 		<script src="angular-resource.js"></script>
+		<script src="https://code.angularjs.org/1.2.22/angular-cookies.min.js"></script>
 		<script src="app.js"></script>
+		<link rel="stylesheet" type="text/css" href="splatter.css"></style>
+		<link href='http://fonts.googleapis.com/css?family=Finger+Paint' rel='stylesheet' type='text/css'>
+		//<script type="text/javascript" src="ui.js"></script>
 	</head>
 	<body>
-		<div ng-controller="RegisterController as register">
-			<h1>Register User</h1>
-			<form id="registerForm" ng-submit="register.registerUser()">
-				<input type="text" placeholder="Name" ng-model="register.data.registerName" /><br/>
-				<input type="text" placeholder="Email" ng-model="register.data.registerEmail" /><br/>
-				<input type="text" placeholder="Password" ng-model="register.data.registerPassword" /><br/>
-				<input id="register" type="submit" value="Register"/>
-			</form>
-		</div>
+		<div id="wrapper" ng-controller="UserController as user">
+			<div id="top">
+				<div id="topLeft">
+					<h1>Splatter</h1>
+				</div>
+				<div id="topRight">
+					<form id="loginForm" ng-submit="user.loginUser()" >
+						<input type="text"  placeholder="ID" ng-model="user.data.name" required/>
+						<input id"loginButton" type="submit"  value="Login" />
+					</form>
+					<button id="registerButton">Register</button>
+				</div>
+			</div>
+			
+			<div id="register">
+				<form id="registerForm" ng-submit="register.registerUser()">
+					<title>Register</title>
+					<input name="name"type="text" placeholder="Name" ng-model="user.data.registerName" required/><br/>
+					<input type="text" placeholder="Email" ng-model="user.data.registerEmail" required/><br/>
+					<input type="text" placeholder="Password" ng-model="user.data.registerPassword" required/><br/>
+					<input id="register" type="submit" value="Save"/>
+				</form>
+			</div>
 
-		<div ng-controller="LoginController as login">
-			<h1>Login User</h1>
-			<form ng-submit="login.loginUser()" >
-				<input type="text"  ng-model="login.data.name"  />
-				<input type="submit"  value="Login" />
-			</form>
-			<p>Name: {{login.u.name}}</p>
-			<p>Blurb: {{login.u.blurb}}</p>
-		</div>
+			<div >
+				<h2>Current User</h2>
+				<p>Name: {{login.u.name}}</p>
+				<p>Blurb: {{login.u.blurb}}</p>
+				<div ng-repeat="splatts in login.feed.splatts_feed">
+					{{splatts.date | date: 'dd/MM/yyyy h:mma'}}</br>
+					<b>{{splatts.name}}</b> 
+					"{{splatts.splatt}}"
+				</div>
+			</div>
 
-		<div ng-controller="UpdateController as update" >
-			<h3>Update User</h3>
-			<form id="editNameForm" ng-submit="update.updateUser()">
-				<input type="text" placeholder="ID" ng-model="update.data.currentID"></br>
-				<input type="text" placeholder="Name" ng-model="update.data.currentName" /></br>
-				<input type="text" placeholder="Blurb" ng-model="update.data.currentBlurb" /></br>
-				<input id="update" type="submit" value="Save Changes"/>
-			</form>
-		</div>
+			<div ng-controller="UpdateController as update" >
+				<h3>Update User</h3>
+				<form id="editNameForm" ng-submit="update.updateUser()">
+					<input type="text" placeholder="ID" ng-model="update.data.currentID" required></br>
+					<input type="text" placeholder="Name" ng-model="update.data.currentName" required/></br>
+					<input type="text" placeholder="Blurb" ng-model="update.data.currentBlurb" required/></br>
+					<input id="update" type="submit" value="Save Changes"/>
+				</form>
+			</div>
 
-		<div ng-controller="ComposeController as splatt" >
-			<h3>New Splatt</h3>
-			<form id="editNameForm" ng-submit="splatt.submitSplatt()">
-				<input type="text" placeholder="ID" ng-model="splatt.data.userID"></br>
-				<textarea placeholder="Splatt" cols="20" rows="5" ng-model="splatt.data.currentBody"></textarea></br>
-				<input id="update" type="submit" value="Save Changes"/>
-			</form>
-		</div>
+			<div ng-controller="ComposeController as splatt" >
+				<h3>New Splatt</h3>
+				<form id="editNameForm" ng-submit="splatt.submitSplatt()">
+					<input type="text" placeholder="ID" ng-model="splatt.data.userID" required></br>
+					<textarea placeholder="Splatt" cols="20" rows="5" ng-model="splatt.data.currentBody" required></textarea></br>
+					<input id="update" type="submit" value="Save Changes"/>
+				</form>
+			</div>
 
-		<div ng-controller="FeedController as userFeed" >
-			<h3>Splatt Feed</h3>
-			<form id="editNameForm" ng-submit="userFeed.updateFeed()">
-				<input type="text" placeholder="ID" ng-model="userFeed.data.userID">
-				<input id="update" type="submit" value="Change User"/>
-			</form>
-			<div ng-repeat="splatts in userFeed.feed">
-				{{splatts.date | date: 'dd/MM/yyyy h:mma'}}
-				{{splatts.splatt}}
+			<!-- <div ng-controller="FeedController as userFeed" >
+				<h3>Splatt Feed</h3>
+				<form id="editNameForm" ng-submit="userFeed.updateFeed()">
+					<input type="text" placeholder="ID" ng-model="userFeed.data.userID" required>
+					<input id="update" type="submit" value="Change User"/>
+				</form>
+				<div ng-repeat="splatts in userFeed.feed.splatts_feed">
+					{{splatts.date | date: 'dd/MM/yyyy h:mma'}}</br>
+					<b>{{splatts.name}}</b> 
+					"{{splatts.splatt}}"
+				</div>
+			</div> -->
+
+			<div ng-controller="FollowController as follow">
+				<h3>Follow</h3>
+				<form id="addFollowForm" ng-submit="follow.addFollow()">
+					<input type="text" placeholder="Follower" ng-model="follow.data.follower" required>
+					<input type="text" placeholder="Followed" ng-model="follow.data.followed" required>
+					<input id="update" type="submit" value="Create Follow"/>
+				</form>
+				<h3>Unfollow</h3>
+				<form id="removeFollowForm" ng-submit="follow.removeFollow()">
+					<input type="text" placeholder="Follower" ng-model="follow.data.follower" required>
+					<input type="text" placeholder="Followed" ng-model="follow.data.followed" required>
+					<input id="update" type="submit" value="Remove Follow"/>
+				</form>
+			</div>
+
+			<div ng-controller="RemoveController as remove">
+				<h3>Remove User</h3>
+				<form ng-submit="remove.removeUser()" >
+					<input type="text"  ng-model="remove.data.userID" required/>
+					<input type="submit"  value="Delete User" />
+				</form>
+			</div>
+
+			<div id="footer">
+				<h3>Dan Bernhardt -- 2014</h3>
 			</div>
 		</div>
 	</body>
