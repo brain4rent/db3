@@ -4,4 +4,8 @@ $(document).ready(function(){
 	$("#registerButton").click(function(){
 		$("#register").toggle();
 	});
+
+	$('#registerSave').click(function(){
+		$("#register").toggle();
+	});
 });
