@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 html {
 	background-color: #C6C6CC;
 	font-family: 'Finger Paint', cursive;
@@ -96,4 +97,108 @@ button{
 	width: 100%;
 	text-align: center;
 	background-image: linear-gradient(to top, #0080FF, #66b2ff);
+=======
+html {
+	background-color: #C6C6CC;
+	font-family: 'Finger Paint', cursive;
+}
+
+#wrapper {
+	padding-top: 5%;
+	margin-left: 15%;
+	margin-right: 15%;
+	background-color: #FFFFFF;
+	height: 100%;
+}
+
+input {
+	font-family: 'Finger Paint', cursive;
+	margin-top: 1%;
+}
+button{
+	font-family: 'Finger Paint', cursive;
+}
+#top {
+
+	position: fixed;
+	right: 0;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 65px;
+	background-image: linear-gradient(to bottom, #0080FF, #66b2ff);
+	padding-left: 20%;
+}
+
+#topLeft{
+	float: left;
+}
+
+#titleImage{
+	height: 70px;
+}
+
+#topRight{
+	margin-top: 20px;
+	margin-left: 30%;
+	width: 20%;
+}
+
+#loginForm{
+	float: left;
+}
+
+#registerButton {
+	float: right;
+}
+
+#register {
+	border: 5px solid #66b2ff;
+	width: 20%;
+	float: right;
+	margin-right: 15%;
+	margin-top: -2%;
+	padding: 2%;
+	background-color: #66b2ff;
+}
+
+#current {
+	margin-left: 10%;
+	float: left;
+}
+
+#update{
+	margin-left: 10%;
+	float: left;
+}
+
+#compose{
+	margin-top: 20%;
+	margin-left: 10%;
+}
+
+.splatts{
+	margin-left: 10%;
+	margin-top: 10px;
+}
+
+#otherUser{
+	margin-left: 10%;
+}
+
+#follow{
+	margin-left: 10%;
+}
+
+#delete{
+	margin-left: 10%;
+}
+
+#footer {
+	margin-top: 10%;
+	height: 40px;
+	width: 100%;
+	text-align: center;
+	background-image: linear-gradient(to top, #0080FF, #66b2ff);
+>>>>>>> 75a96e97ef1d85d53ddfab39c7888e4ee94f2d65
 }
