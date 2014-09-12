@@ -81,6 +81,15 @@ button{
 	margin-left: 10%;
 	margin-top: 10px;
 }
+
+#follow{
+	margin-left: 10%;
+}
+
+#delete{
+	margin-left: 10%;
+}
+
 #footer {
 	margin-top: 10%;
 	height: 40px;
