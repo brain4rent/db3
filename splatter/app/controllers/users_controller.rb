@@ -84,20 +84,24 @@ before_filter :set_headers
   # Creates a follower/followed relationship - using POST body
   def add_follows
 	@user = User.find(params[:follower_id])
-	@user_to_follow = User.find(params[:followed_id])
+	@follows User.find(params[:followed_id])
 
-	@user.follows << @user_to_follow
-	
-	render json: @user.follows
+	if @user.follows << @follows and @follows.followers << @user
+	  head :no_content
+	  render json: @user.follows
+	else
+  	  render json: @user.errors, status: :unprocessable_entity
+	end
   end
   
   # DELETE /users/follows/[:id1]/[:id2]
   # Causes user with id1 to unfollow the user with id2
   def delete_follows
 	@user = User.find(params[:id])
-	@user_to_delete = User.find(params[:follows_id])
+	@follows = User.find(params[:follows_id])
 	
-	@user.follows.delete(@user_to_delete)
+	@user.follows.delete(@follows)
+	@follows.followers.delete(@user)
 	
 	render json: @user.follows
   end
