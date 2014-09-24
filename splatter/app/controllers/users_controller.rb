@@ -112,8 +112,8 @@ before_filter :set_headers
 	@feed = Splatt.find_by_sql(["SELECT * FROM splatts JOIN follows ON splatts.user_id = follows.followed_id JOIN users ON follows.follower_id = users.id WHERE users.id = ?", params[:id]])
   end
 
-  end
-
   def set_headers
     headers['Access-Control-Allow-Origin'] = '*'
   end
+
+end
