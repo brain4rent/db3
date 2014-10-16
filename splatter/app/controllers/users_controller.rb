@@ -83,11 +83,10 @@ before_filter :set_headers
   # POST /users/follows
   # Creates a follower/followed relationship - using POST body
   def add_follows
-	@user = User.find(params[:follower_id])
-	@follows User.find(params[:followed_id])
+	@user = User.find(params[:id])
+	@follows = User.find(params[:follows_id])
 
 	if @user.follows << @follows and @follows.followers << @user
-	  head :no_content
 	  render json: @user.follows
 	else
   	  render json: @user.errors, status: :unprocessable_entity
