@@ -39,7 +39,7 @@ curl -i -H "Content-type: application/json" -X GET http://bernhardt.sqrawler.com
 
 #Task 7
 #Causes the first user to unfollow the third user
-curl -i -H "Content-type: application/json" -X DELETE http://bernhardt.sqrawler.com:3000/users/follows/54444eb069702d31ec000000/54444eb069702d31ec020000"}
+curl -i -H "Content-type: application/json" -X DELETE http://bernhardt.sqrawler.com:3000/users/follows/54444eb069702d31ec000000/54444eb069702d31ec020000
 
 #Task 8
 #Displays the first user's newsfeed
