@@ -5,6 +5,7 @@ class User
   field :password, type: String
   field :blurb, type: String
   embeds_many :splatts
+
   has_and_belongs_to_many :follows, class_name: "User"
   has_and_belongs_to_many :followers, class_name: "User"
 end
