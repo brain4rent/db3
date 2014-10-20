@@ -105,10 +105,45 @@ before_filter :set_headers
   # GET /users/splatts-feed/[:id]
   #Returns the splatts feed for the user with the specified id
   def splatts_feed
-
-	@feed = Splatt.find_by_sql("SELECT splatts.* FROM splatts JOIN follows ON splatts.user_id = follows.followed_id JOIN users ON follows.follower_id = users.id WHERE users.id = #{params[:id]} UNION SELECT * FROM splatts WHERE splatts.user_id = #{params[:id]} ORDER BY created_at DESC")
-  end
-
+  
+  map = %Q{
+	function() {
+	  if(this.splatts) {
+	    var owner = this;
+	    var splatts = this.splatts;			
+	    splatts.forEach(function(item) {
+	      item.owner = owner._id;
+	    });
+	    emit ("feed", {"list": splatts});		
+	  }
+	}
+  }
+  
+  reduce = %Q{
+	function(key, values) {
+	  var feed = {"list": []};
+	  values.forEach(function(v) {
+	    feed.list = feed.list.concat(v.list);
+	  });
+	  return feed;
+	}
+  }
+  
+  finalize = %Q{
+  	function(key, val) {
+    	  var myList = val.list;
+	  if(myList) {
+	    myList.sort(function(a, b) {
+	      return b.updated_at - a.updated_at;
+	    });
+	  }
+	  return myList;
+	}
+  }
+  
+  @user User.find(params[:id])
+  @result = User.in(id: user.follows_ids).map_reduce(map, reduce).out(inline: true).finalize(finalise)
+  render json: result.entries[0][:value][:list]
   end
 
   def set_headers
