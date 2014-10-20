@@ -127,7 +127,7 @@ before_filter :set_headers
 	}
   }
   
-  finalize = %Q{
+  finalise = %Q{
   	function(key, val) {
     	  var myList = val.list;
 	  if(myList) {
