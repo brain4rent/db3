@@ -140,7 +140,7 @@ before_filter :set_headers
   }
   
   user = User.find(params[:id])
-  result = User.in(id: user.follows_ids).map_reduce(map, reduce).out(inline: true).finalize(finalise)
+  result = User.in(id: user.follow_ids).map_reduce(map, reduce).out(inline: true).finalize(finalise)
   render json: result.entries[0][:value][:list]
   end
 
