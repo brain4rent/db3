@@ -108,12 +108,12 @@ before_filter :set_headers
   # GET /users/splatts-feed/[:id]
   #Returns the splatts feed for the user with the specified id
   def splatts_feed
-  	map = %Q{
+  
+  map = %Q{
 	function() {
 	  if(this.splatts) {
-	    var splatts = this.splatts;
-	    emit ("feed", {"list": splatts});	
-	  });
+	    emit ("feed", {"list": this.splatts})	
+	  }
 	}
   }
   
