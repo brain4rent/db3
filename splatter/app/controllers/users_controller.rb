@@ -109,13 +109,9 @@ before_filter :set_headers
   map = %Q{
 	function() {
 	  if(this.splatts) {
-	    var owner = this;
-	    var splatts = this.splatts;			
-	    splatts.forEach(function(item) {
-	      item.owner = owner._id;
-	    });
-	    emit ("feed", {"list": splatts});		
-	  }
+	    var splatts = this.splatts;
+	    emit ("feed", {"list": splatts});	
+	  });
 	}
   }
   
@@ -134,10 +130,10 @@ before_filter :set_headers
     	  var myList = val.list;
 	  if(myList) {
 	    myList.sort(function(a, b) {
-	      return b.updated_at - a.updated_at;
+	      return b.created_at - a.created_at;
 	    });
 	  }
-	  return myList;
+	  return {"list": myList};
 	}
   }
   
