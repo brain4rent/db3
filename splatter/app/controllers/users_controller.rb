@@ -5,7 +5,8 @@ before_filter :set_headers
   # GET /users
   # Returns a list of all users
   def index
-    @users = User.all
+    db = UserRepository.new(Riak::Client.new)
+    @users = db.bucket("users")
 
     render json: @users
   end
@@ -13,20 +14,25 @@ before_filter :set_headers
   # GET /users/[:id]
   # Returns user with specified id
   def show
-    @user = User.find(params[:id])
-
+    db = UserRepository.new(Riak::Client.new)
+    @user = db.find(params[:id])
     render json: @user
   end
 
   # POST /users
   # Creates a user - using POST body
   def create
-    @user = User.new(user_params(params[:user]))
+    @user = User.new
+    @user.email = params[:email]
+    @user.name = params[:name]
+    @user.password = params[:password]
+    @user.blurb = params[:blurb]
 
-    if @user.save
+    db = UserRepository.new(Riak::Client.new)
+    if db.save(@user)
       render json: @user, status: :created, location: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: "error", status: :unprocessable_entity
     end
   end
 
