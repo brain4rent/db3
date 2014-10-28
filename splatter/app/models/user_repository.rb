@@ -7,6 +7,7 @@ class UserRepository
   end
 
   def all
+    @users = client.find(BUCKET).objects 
   end
 
   def delete(user)
