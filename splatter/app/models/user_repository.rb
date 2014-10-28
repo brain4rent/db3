@@ -11,6 +11,8 @@ class UserRepository
   end
 
   def delete(user)
+    @users = client.find(BUCKET)
+    @users.delete(user)
   end
 
   def find(key)
@@ -38,5 +40,9 @@ class UserRepository
   end
 
   def update(user)
+    @key = user.email
+    @user = @client.find(@key)
+    @user.data = user
+    @user.store
   end
 end
