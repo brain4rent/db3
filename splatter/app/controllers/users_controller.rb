@@ -83,11 +83,10 @@ before_filter :set_headers
   # POST /users/follows
   # Creates a follower/followed relationship - using POST body
   def add_follows
-	@user = User.find(params[:follower_id])
-	@follows User.find(params[:followed_id])
+	@user = User.find(params[:id])
+	@follows = User.find(params[:follows_id])
 
 	if @user.follows << @follows and @follows.followers << @user
-	  head :no_content
 	  render json: @user.follows
 	else
   	  render json: @user.errors, status: :unprocessable_entity
@@ -109,7 +108,40 @@ before_filter :set_headers
   # GET /users/splatts-feed/[:id]
   #Returns the splatts feed for the user with the specified id
   def splatts_feed
-	@feed = Splatt.find_by_sql(["SELECT * FROM splatts JOIN follows ON splatts.user_id = follows.followed_id JOIN users ON follows.follower_id = users.id WHERE users.id = ?", params[:id]])
+  
+  map = %Q{
+	function() {
+	  if(this.splatts) {
+	    emit ("feed", {"list": this.splatts})	
+	  }
+	}
+  }
+  
+  reduce = %Q{
+	function(key, values) {
+	  var feed = {"list": []};
+	  values.forEach(function(v) {
+	    feed.list = feed.list.concat(v.list);
+	  });
+	  return feed;
+	}
+  }
+  
+  finalise = %Q{
+  	function(key, val) {
+    	  var myList = val.list;
+	  if(myList) {
+	    myList.sort(function(a, b) {
+	      return b.created_at - a.created_at;
+	    });
+	  }
+	  return {"list": myList};
+	}
+  }
+  
+  user = User.find(params[:id])
+  result = User.in(id: user.follow_ids).map_reduce(map, reduce).out(inline: true).finalize(finalise)
+  render json: result.entries[0][:value][:list]
   end
 
   def set_headers
