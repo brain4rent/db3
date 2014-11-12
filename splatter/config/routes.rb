@@ -1,4 +1,5 @@
 Splatter::Application.routes.draw do
+  put 'usesrs/:id' => 'users#update', :constraints => {:id => /[0-9A-Za-z\-\.@]+/ }
   resources :splatts, except: [:new, :edit]
   get 'users/:id' => 'users#show', :constraints => {:id => /[0-9A-Za-z\-\.\@]+/}
   resources :users, except: [:new, :edit]

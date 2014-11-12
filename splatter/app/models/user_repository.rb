@@ -7,7 +7,12 @@ class UserRepository
   end
 
   def all
-    @users = client.find(BUCKET).objects 
+    @users = Array.new
+    @client.bucket(BUCKET).keys do |keys|
+        key do |user|
+	  user << @users
+        end
+    end
   end
 
   def delete(user)
